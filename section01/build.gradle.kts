@@ -3,6 +3,7 @@ plugins {
 	kotlin("plugin.spring") version "2.2.21"
 	id("org.springframework.boot") version "3.5.9"
 	id("io.spring.dependency-management") version "1.1.7"
+	id("org.graalvm.buildtools.native") version "0.10.4"
 }
 
 group = "com.github.msorkhpar"
@@ -47,4 +48,25 @@ kotlin {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+graalvmNative {
+	binaries {
+		named("main") {
+			imageName.set("spring-ai-claude")
+			mainClass.set("com.github.msorkhpar.ai.claude.SpringAiClaudeApplicationKt")
+			buildArgs.add("--verbose")
+			buildArgs.add("-H:+ReportExceptionStackTraces")
+			// Optimize for faster startup
+			buildArgs.add("-Ob")
+			// Enable monitoring with JFR
+			buildArgs.add("--enable-monitoring=jfr")
+		}
+		named("test") {
+			buildArgs.add("--verbose")
+		}
+	}
+	metadataRepository {
+		enabled.set(true)
+	}
 }
