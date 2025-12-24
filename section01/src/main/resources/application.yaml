@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: spring-ai-claude
+  ai:
+    anthropic:
+      api-key: ${PERSONAL_CLAUDE_API_KEY}
+      chat:
+        options:
+          model: claude-haiku-4-5
