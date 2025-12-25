@@ -6,7 +6,7 @@ plugins {
 	id("org.graalvm.buildtools.native") version "0.10.4"
 }
 
-group = "com.github.msorkhpar"
+group = "com.github.msorkhpar.spring-ai"
 version = "0.0.1-SNAPSHOT"
 description = "Covering Udemy Spring-AI Fast Track Course"
 
@@ -23,6 +23,8 @@ repositories {
 extra["springAiVersion"] = "1.1.2"
 
 dependencies {
+	implementation("com.github.msorkhpar.spring-ai:base:0.0.1-SNAPSHOT")
+
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")

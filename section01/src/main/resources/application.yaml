@@ -1,6 +1,6 @@
 spring:
   application:
-    name: spring-ai-claude
+    name: spring-ai-claude-section01
   ai:
     anthropic:
       api-key: ${PERSONAL_CLAUDE_API_KEY}
