@@ -1,3 +1,12 @@
+chat:
+  client:
+    claude:
+      enabled: true
+    ollama:
+      enabled: false
+    ollama-docker:
+      enabled: false
+
 spring:
   application:
     name: spring-ai-claude-section01
@@ -7,3 +16,17 @@ spring:
       chat:
         options:
           model: claude-haiku-4-5
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        options:
+          model: llama3.2:1b
+
+ollama:
+  secondary:
+    base-url: http://localhost:11435  # Ollama Docker Port
+    model: llama3.2:1b
+
+logging:
+  level:
+    org.springframework.ai.chat.client.advisor: DEBUG

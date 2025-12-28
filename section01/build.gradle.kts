@@ -1,18 +1,18 @@
 plugins {
-	kotlin("jvm") version "2.2.21"
-	kotlin("plugin.spring") version "2.2.21"
-	id("org.springframework.boot") version "3.5.9"
-	id("io.spring.dependency-management") version "1.1.7"
-	id("org.graalvm.buildtools.native") version "0.10.4"
+	alias(libs.plugins.kotlin.jvm)
+	alias(libs.plugins.kotlin.spring)
+	alias(libs.plugins.spring.boot)
+	alias(libs.plugins.spring.dependency.management)
+	alias(libs.plugins.graalvm.native)
 }
 
 group = "com.github.msorkhpar.spring-ai"
 version = "0.0.1-SNAPSHOT"
-description = "Covering Udemy Spring-AI Fast Track Course"
+description = "Covering Udemy Spring-AI Fast Track Course - Section01"
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(24)
+		languageVersion = JavaLanguageVersion.of(libs.versions.java.get().toInt())
 	}
 }
 
@@ -20,25 +20,23 @@ repositories {
 	mavenCentral()
 }
 
-extra["springAiVersion"] = "1.1.2"
 
 dependencies {
 	implementation("com.github.msorkhpar.spring-ai:base:0.0.1-SNAPSHOT")
 
-	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	implementation("org.springframework.boot:spring-boot-starter-actuator")
-	implementation("org.springframework.ai:spring-ai-starter-model-anthropic")
-	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	implementation(libs.bundles.spring.web)
+	implementation(libs.bundles.kotlin.essentials)
+	implementation(libs.bundles.spring.ai.starters)
+
+	developmentOnly(libs.bundles.dev.tools)
+
+	testImplementation(libs.bundles.testing.common)
+	testRuntimeOnly(libs.junit.platform.launcher)
 }
 
 dependencyManagement {
 	imports {
-		mavenBom("org.springframework.ai:spring-ai-bom:${property("springAiVersion")}")
+		mavenBom(libs.spring.ai.bom.get().toString())
 	}
 }
 
@@ -50,6 +48,12 @@ kotlin {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+	jvmArgs("-XX:+EnableDynamicAgentLoading")
+	testLogging {
+		events("passed", "skipped", "failed")
+		exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+		showStandardStreams = false
+	}
 }
 
 graalvmNative {
@@ -59,10 +63,12 @@ graalvmNative {
 			mainClass.set("com.github.msorkhpar.ai.claude.SpringAiClaudeApplicationKt")
 			buildArgs.add("--verbose")
 			buildArgs.add("-H:+ReportExceptionStackTraces")
-			// Optimize for faster startup
 			buildArgs.add("-Ob")
-			// Enable monitoring with JFR
 			buildArgs.add("--enable-monitoring=jfr")
+
+			buildArgs.add("-H:IncludeResources=.*\\.properties")
+			buildArgs.add("-H:IncludeResources=.*\\.yaml")
+
 		}
 		named("test") {
 			buildArgs.add("--verbose")

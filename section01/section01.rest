@@ -1,0 +1,13 @@
+@message="Hello!"
+
+### Default LLM(Claude)
+GET {{baseUrl}}/api?
+    message={{message}}
+
+### Running Ollama Service
+GET {{baseUrl}}/api/ollama?
+    message={{message}}
+
+### Ollama in Docker
+GET {{baseUrl}}/api/ollama-docker?
+    message={{message}}

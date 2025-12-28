@@ -1,8 +1,8 @@
 plugins {
-	kotlin("jvm") version "2.2.21"
-	kotlin("plugin.spring") version "2.2.21"
-	id("org.springframework.boot") version "3.5.9"
-	id("io.spring.dependency-management") version "1.1.7"
+	alias(libs.plugins.kotlin.jvm)
+	alias(libs.plugins.kotlin.spring)
+	alias(libs.plugins.spring.boot)
+	alias(libs.plugins.spring.dependency.management)
 }
 
 group = "com.github.msorkhpar.spring-ai"
@@ -11,7 +11,7 @@ description = "A base library to be shared for the other modules"
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(24)
+		languageVersion = JavaLanguageVersion.of(libs.versions.java.get().toInt())
 	}
 }
 
@@ -19,18 +19,17 @@ repositories {
 	mavenCentral()
 }
 
-extra["springAiVersion"] = "1.1.2"
-
 dependencies {
-	implementation("org.springframework.ai:spring-ai-client-chat")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	implementation(libs.spring.boot.autoconfigure)
+	implementation(libs.bundles.spring.ai.core)
+
+	testImplementation(libs.bundles.testing.base)
+	testRuntimeOnly(libs.junit.platform.launcher)
 }
 
 dependencyManagement {
 	imports {
-		mavenBom("org.springframework.ai:spring-ai-bom:${property("springAiVersion")}")
+		mavenBom(libs.spring.ai.bom.get().toString())
 	}
 }
 
@@ -42,6 +41,7 @@ kotlin {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+	jvmArgs("-XX:+EnableDynamicAgentLoading")
 }
 
 tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
