@@ -32,11 +32,13 @@ build/
 ### VS Code ###
 .vscode/
 
-.DS_Store
-
 **/.kotlin
 
 **/.env
 
 ### Gradle ###
 .gradle
+
+### macOS ###
+**/.DS_Store
+.DS_Store
