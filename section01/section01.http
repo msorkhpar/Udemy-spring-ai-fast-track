@@ -18,3 +18,8 @@ GET {{baseUrl}}/api/ollama-docker?
 GET {{baseUrl}}/api/stream?
     message=Tell a short story
 Accept: application/stream+json
+
+### ========================================
+### Structured Endpoint
+### ========================================
+GET {{baseUrl}}/api/structured
