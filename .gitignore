@@ -37,3 +37,6 @@ build/
 **/.kotlin
 
 **/.env
+
+### Gradle ###
+.gradle
