@@ -50,8 +50,8 @@ spring-web = [
     "spring-boot-starter-actuator"
 ]
 
-# Spring AI core (for base)
-spring-ai-core = [
+# Spring AI base
+spring-ai-base = [
     "spring-ai-client-chat",
     "spring-ai-anthropic",
     "spring-ai-ollama"
@@ -79,15 +79,9 @@ dev-tools = [
 testing-common = [
     "spring-boot-starter-test",
     "kotlin-test-junit5",
-    "mockk"
-]
-
-# Testing with params (for base)
-testing-base = [
-    "spring-boot-starter-test",
-    "kotlin-test-junit5",
     "mockk",
     "junit-jupiter-params"
+
 ]
 
 [plugins]

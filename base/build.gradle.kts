@@ -21,9 +21,9 @@ repositories {
 
 dependencies {
 	implementation(libs.spring.boot.autoconfigure)
-	implementation(libs.bundles.spring.ai.core)
+	implementation(libs.bundles.spring.ai.base)
 
-	testImplementation(libs.bundles.testing.base)
+	testImplementation(libs.bundles.testing.common)
 	testRuntimeOnly(libs.junit.platform.launcher)
 }
 
@@ -44,7 +44,7 @@ tasks.withType<Test> {
 	jvmArgs("-XX:+EnableDynamicAgentLoading")
 }
 
-tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
+tasks.bootJar {
 	enabled = false
 }
 
