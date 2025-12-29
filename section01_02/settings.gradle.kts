@@ -1,4 +1,4 @@
-rootProject.name = "section01"
+rootProject.name = "section01_02"
 
 // Include the base library as a composite build
 includeBuild("../base")

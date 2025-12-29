@@ -7,6 +7,8 @@ import org.springframework.ai.chat.model.ChatModel
 import org.springframework.ai.ollama.OllamaChatModel
 import org.springframework.ai.ollama.api.OllamaApi
 import org.springframework.ai.ollama.api.OllamaChatOptions
+import org.springframework.ai.ollama.management.ModelManagementOptions
+import org.springframework.ai.ollama.management.PullModelStrategy
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
@@ -64,13 +66,16 @@ class ChatClientConfig(
         matchIfMissing = true
     )
     fun ollamaDockerChatClient(
-        @Value("\${ollama.secondary.base-url}") baseUrl: String,
-        @Value("\${ollama.secondary.model}") model: String
+        @Value($$"${ollama.secondary.base-url}") baseUrl: String,
+        @Value($$"${ollama.secondary.model}") model: String
     ): ChatClient {
         val ollamaApi = OllamaApi.builder().baseUrl(baseUrl).build()
         val chatModel = OllamaChatModel.builder()
             .ollamaApi(ollamaApi)
             .defaultOptions(OllamaChatOptions.builder().model(model).build())
+            .modelManagementOptions(
+                ModelManagementOptions.builder().pullModelStrategy(PullModelStrategy.WHEN_MISSING).build()
+            )
             .build()
         return createChatClient(chatModel)
     }

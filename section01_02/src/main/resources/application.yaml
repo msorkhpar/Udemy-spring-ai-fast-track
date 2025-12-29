@@ -3,9 +3,9 @@ chat:
     claude:
       enabled: true
     ollama:
-      enabled: false
+      enabled: true
     ollama-docker:
-      enabled: false
+      enabled: true
 
 spring:
   application:
@@ -21,6 +21,8 @@ spring:
       chat:
         options:
           model: llama3.2:1b
+      init:
+        pull-model-strategy: when_missing
 
 ollama:
   secondary:

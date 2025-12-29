@@ -6,16 +6,14 @@ services:
       - "11435:11434"
     volumes:
       - ollama_data:/root/.ollama
-      - ./ollama-init.sh:/ollama-init.sh
     environment:
       - OLLAMA_KEEP_ALIVE=24h
-    entrypoint: [ "/bin/sh", "/ollama-init.sh", "llama3.2:1b" ]
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "ollama", "list", "|", "grep", "llama3.2:1b"]
-      interval: 15s
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
       timeout: 5s
-      retries: 10
+      retries: 3
 
 volumes:
   ollama_data:
