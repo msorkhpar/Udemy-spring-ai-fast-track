@@ -3,11 +3,13 @@ chat:
     claude:
       enabled: true
     ollama:
-      enabled: true
+      enabled: false
     ollama-docker:
-      enabled: true
+      enabled: false
 
 spring:
+  main:
+    lazy-initialization: true
   application:
     name: spring-ai-claude-section01
   ai:

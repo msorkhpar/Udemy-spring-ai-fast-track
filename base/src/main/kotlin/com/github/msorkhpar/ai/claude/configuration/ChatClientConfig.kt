@@ -51,7 +51,7 @@ class ChatClientConfig(
         prefix = "chat.client.ollama",
         name = ["enabled"],
         havingValue = "true",
-        matchIfMissing = true
+        matchIfMissing = false
     )
     fun ollamaChatClient(
         ollamaChatModel: OllamaChatModel
@@ -63,7 +63,7 @@ class ChatClientConfig(
         prefix = "chat.client.ollama-docker",
         name = ["enabled"],
         havingValue = "true",
-        matchIfMissing = true
+        matchIfMissing = false
     )
     fun ollamaDockerChatClient(
         @Value($$"${ollama.secondary.base-url}") baseUrl: String,
